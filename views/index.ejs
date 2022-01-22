@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- title and icon of webpage -->
+        <title>
+            TODO List
+        </title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images//apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images//favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images//favicon-16x16.png">
+        <link rel="manifest" href="/images/site.webmanifest">
+
+        <!-- script for icons -->
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+
+        <!-- link to css styles -->
+        <link href="/css/index.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <!-- create a form with input box and submit button -->
+        <div id="container">
+            <h1>TO DO List</h1>
+            <hr>
+            <form action="/create-task" method="POST">
+                <div class="inputContainer">   
+                    <span class="inputBox">
+                        <input type="text" name="task" placeholder="Enter Your Task" required>
+                            <i id = "img" class="fas fa-tasks"></i>
+                    </span>
+
+                    <span>
+                        <button id="submitButton" type="submit">
+                            <i class="fas fa-plus"> </i>
+                                Add &nbspTask
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <hr>
+
+
+            <!-- add an area to display tasks left -->
+            <div class = "allAndImportantContainer">
+                <div class="inlineBlock" id = "leftTasks">
+                    <span id = "tasksLeft"></span>
+                </div>
+            
+            <!--create navigation buttons to display important, completed, uncompleted and all tasks -->
+                <div id="allImp">
+                    <div class="inlineBlock" id = "importantTasks">
+                        <a href="/display-important-tasks/">
+                            <button class = "switchButtons" >
+                                <i class="fas fa-star noHover"></i>
+                                    Important Tasks
+                            </button>
+                        </a>
+                    </div>
+
+                    <div class="inlineBlock"  id = "completedTasks">
+                        <a href="/display-completed-tasks/">
+                        <button class = "switchButtons">
+                            <i class="fas fa-check noHover"></i>
+                                Completed Tasks
+                        </button>
+                        </a>
+                    </div>
+
+                    <div class="inlineBlock" id = "uncompletedTasks">
+                        <a href="/display-uncompleted-tasks/">
+                        <button class = "switchButtons" >
+                            <i class="fas fa-times noHover"></i>
+                                Uncompleted Tasks
+                        </button>
+                        </a>
+                    </div>
+
+                    <div class="inlineBlock" id = "allTasks">
+                        <a href="/">
+                            <button class = "switchButtons" >
+                                <i class="fas fa-reply-all noHover"></i>
+                                    All Tasks
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <!-- make a for loop to get list of tasks from database and display on webpage -->
+            <div class = "tasksContainer">
+                <ul id="uList">
+                    <% for(let i of tasksList){%>
+                        <li id = "tasks">
+                        <div class = "task" id="task"> 
+                                <i><%= i.task %></i>
+                        </div>
+                        <div id="delImpButtons">
+
+                            <!-- link to mark important task and if condition to mark as important -->
+                            <div class = "button" >
+                                <a href="/important-task/?important=<%= i.important %>&id=<%= i.id %>">
+                                    <i id="importantButton" class="<% if(i.important){ %>importantTask<% }%>  fas fa-star fa-border"></i>
+                                </a>
+                            </div> 
+
+                            <!-- link to mark completed task and if condition to mark as completed -->
+                            <div class = "button" >
+                                <a href="/completed-task/?completed=<%= i.completed %>&id=<%= i.id %>">
+                                    <i id="completedButton" class="<% if(i.completed){ %>completedTask<% }%> fas fa-check fa-border"></i>
+                                </a>
+                            </div>
+
+                            <!-- create onclick event on button to script -->
+                            <div class = "button" >
+                                <a id = "del" onclick = deleteTask("<%=i.important%>","<%=i.id%>") >
+                                    <i id="deleteButton" class="fas fa-trash-alt fa-border"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="popup" style="display: none">
+                        </div>
+                        </li>
+                        <hr>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+        
+    </body>
+    
+    <!-- link to javascript file -->
+    <script src = "/javascript/script.js"></script>
+</html>
