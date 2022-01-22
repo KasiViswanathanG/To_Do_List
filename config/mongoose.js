@@ -2,7 +2,7 @@
 //access and connect to mongo database
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/tasks_db');
+mongoose.connect('mongodb+srv://viswa:viswa@cluster0.fzs2q.mongodb.net/tasks_db?retryWrites=true&w=majority');
 
 const db = mongoose.connection;
 
